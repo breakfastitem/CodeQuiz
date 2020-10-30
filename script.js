@@ -1,59 +1,93 @@
 /**
- * Declare objects in base html
+ * link vars to html objects
  */
-console.log(window);
+
 var contentBox = document.getElementById("dynamic-content");
 
 var timer = document.getElementById("timer");
 
 /**
-* Create Initial content in grouped object
+* dynamic box content in grouped objects
 */
 
 var startContent = {
     //properties hold html nodes
-    startHeader: window.document.createElement("h2"),
+    header: window.document.createElement("h2"),
 
-    startInstructions: window.document.createElement("p"),
+    instructions: window.document.createElement("p"),
 
-    startButton: window.document.createElement("button"),
+    button: window.document.createElement("button"),
 
     /**
    * Initialize object content and place content on dom
        */
 
-    initializeStartBox: function () {
+    initializeContent: function () {
 
         //startButton.setAttribute("class","btn");
 
 
-        this.startButton.textContent = "Start";
-        this.startInstructions.textContent = "Try to answer the following questions within the time limit.";
-        this.startHeader.textContent = "Coding Quiz Challenge";
+        this.button.textContent = "Start";
+        this.instructions.textContent = "Try to answer the following questions within the time limit.";
+        this.header.textContent = "Coding Quiz Challenge";
 
-        contentBox.appendChild(this.startHeader);
-        contentBox.appendChild(this.startInstructions);
-        contentBox.appendChild(this.startButton);
+        contentBox.appendChild(this.header);
+        contentBox.appendChild(this.instructions);
+        contentBox.appendChild(this.button);
+
+    }
+
+};
+
+var endContent ={
+
+    header: window.document.createElement("h2"),
+
+    score: window.document.createElement("p"),
+
+    initialsForm : window.document.createElement("form"),
+
+    initialsButton : window.document.createElement("button"),
+
+    initialsInstructions : window.document.createElement("span"),
+
+    initialsInput : window.document.createElement("input"),
+
+    initializeContent: function () {
+
+
+        this.initialsButton.textContent = "Submit";
+        this.score.textContent = "Final Score: TODO";
+        this.header.textContent = "All Done!";
+        this.initialsInstructions.textContent ="Enter Initials:";
+
+        contentBox.appendChild(this.header);
+        contentBox.appendChild(this.score);
+        contentBox.appendChild(this.initialsForm);
+        
+        this.initialsForm.appendChild(this.initialsInstructions);
+        this.initialsForm.appendChild(this.initialsInput);
+        this.initialsForm.appendChild(this.initialsButton);
+        
 
     }
 
 
-
 };
-
-
-startContent.initializeStartBox();
-
-//startButton.addEventListener("click",startQuiz)
-
-
 
 /**
  * Starts Timer and question mode
  */
 function startQuiz() {
-
+    console.log("Start The quiz");
 }
+
+
+endContent.initializeContent();
+
+startContent.button.addEventListener("click",startQuiz)
+
+
 
 
 
