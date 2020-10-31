@@ -7,7 +7,6 @@ var contentBox = document.getElementById("dynamic-content");
 
 var timer = document.getElementById("timer");
 
-
 /**
  * Global vars
  */
@@ -17,6 +16,9 @@ var timerCount=75;
 
 //will be interval of timer
 var interval;
+
+var initialsData;
+var initialsData;
 
 /**
 * dynamic box content in grouped objects
@@ -296,19 +298,25 @@ function processAnswer(event){
 
 //Handles submition of initials
 //saves to local storage navigates to high score page
-//TODO:: prevent initials longer than 3 letters
 function setHighScore(event){
+
     event.preventDefault();
+
+    initialsData= JSON.parse(localStorage.getItem("initials"));
+    scoresData= JSON.parse(localStorage.getItem("scores"));
+
+    if(initialsData===null){
+        initialsData=[];
+        scoresData=[];
+    } 
 
     var initials= endContent.initialsInput.value;
     
     if(initials!=null && initials.length<4){
-        var count= Number(localStorage.getItem("scoresCount"));
-       
-        count++;
-
-        localStorage.setItem("scoresCount",count);
-        localStorage.setItem("score-"+count,initials);
+        initialsData.push(initials);
+        scoresData.push(score);
+        localStorage.setItem("initials",JSON.stringify(initialsData));
+        localStorage.setItem("scores",JSON.stringify(scoresData));
 
     }else{
         console.log("Bad Input");
