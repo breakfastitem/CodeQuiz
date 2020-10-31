@@ -84,7 +84,7 @@ var endContent ={
         this.initialsForm.appendChild(this.initialsInstructions);
         this.initialsForm.appendChild(this.initialsInput);
         this.initialsForm.appendChild(this.initialsButton);
-        
+         
 
     },
     updateContent: function(){
@@ -294,6 +294,30 @@ function processAnswer(event){
 
 }
 
+//Handles submition of initials
+//saves to local storage navigates to high score page
+//TODO:: prevent initials longer than 3 letters
+function setHighScore(event){
+    event.preventDefault();
+
+    var initials= endContent.initialsInput.value;
+    
+    if(initials!=null && initials.length<4){
+        var count= Number(localStorage.getItem("scoresCount"));
+       
+        count++;
+
+        localStorage.setItem("scoresCount",count);
+        localStorage.setItem("score-"+count,initials);
+
+    }else{
+        console.log("Bad Input");
+    }
+
+    window.location.href="./src/html/scores.html";
+
+}
+
 endContent.initializeContent();
 startContent.initializeContent();
 questionContent.initializeContent();
@@ -302,5 +326,7 @@ confirmContent.initializeContent();
 startContent.button.addEventListener("click",startQuiz);
 
 questionContent.answerList.addEventListener("click",processAnswer);
+
+endContent.initialsButton.addEventListener("click", setHighScore);
 
 startContent.displayContent();
