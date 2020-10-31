@@ -4,7 +4,6 @@
 
 var contentBox = document.getElementById("dynamic-content");
 
-var confirmBox = document.getElementById("dynamic-confirmation");
 
 var timer = document.getElementById("timer");
 
@@ -112,11 +111,11 @@ var questionContent = {
 
     answerListButtons : [ , , , ] ,
 
-    correctAnswerIndexes : [0,1],
+    correctAnswerIndexes : [0,1,3,1,2,2],
 
-    questions: ["What is the valid operator for declaring a variable in java script?"," At the top level in a script element, What is the name of object the key word (this) references?"],
+    questions: ["What is the valid operator for declaring a variable in java script?"," In the broadest scope of a html script element, what is the name of object the key word (this) references? (DOM)","Variables passed into a function call are referred to as ____.","Which of the following is an example of camel case.","What is the length of the array returned by \"hello - world\".split(\" \") .","In javascript, which of the follwing is not a valid way to create an array containing the value 4."],
 
-    answers: [["var","int","string","variable"],["document","window","depends on the script name","main"]],
+    answers: [["var","int","string","variable"],["document","window","null","main"],["parameters","objects","booleans","arguments"],["camel-case","camelCase","Camelcase","CamelCase"],["1","2","3","4"],["var four =[4];","var four =[4,];","var four = new Array(4)","var four = new Array('4')"]],
     
     questionIndex: 0,
 
@@ -176,7 +175,7 @@ var questionContent = {
 };
 
 var confirmContent = {
-
+    confirmBox: window.document.getElementById("dynamic-confirmation"),
     container: window.document.createElement("div"),
     line : window.document.createElement("hr"),
     header: window.document.createElement("h3"),
@@ -202,7 +201,7 @@ var confirmContent = {
             this.header.textContent="Wrong!";
         }
 
-        confirmBox.appendChild(this.container);
+        this.confirmBox.appendChild(this.container);
 
         var timerTimeout = setTimeout(()=>{
             this.clearConfirmBox();
@@ -211,8 +210,8 @@ var confirmContent = {
     },
 
     clearConfirmBox : function (){
-        while(confirmBox.firstChild!=null){
-            confirmBox.removeChild(confirmBox.firstChild);
+        while(this.confirmBox.firstChild!=null){
+            this.confirmBox.removeChild(this.confirmBox.firstChild);
         }
     }
 
@@ -240,6 +239,18 @@ function startQuiz() {
     questionContent.displayContent();
 }
 
+function endQuiz(){
+    console.log("The quiz has ended");
+
+    endTimer();
+
+    score*=timerCount+1;
+
+    clearDynamicBox();
+    endContent.displayContent();
+}
+
+
 //Starts timer when timer reaches zero quiz is ended
 function startTimer(){
 
@@ -260,17 +271,6 @@ function startTimer(){
 function endTimer(){
     clearInterval(interval);
     timer.textContent="";
-}
-
-function endQuiz(){
-    console.log("The quiz has ended");
-
-    endTimer();
-
-    score*=timerCount+1;
-
-    clearDynamicBox();
-    endContent.displayContent();
 }
 
 //Determines weather a question is correct or not and loads next question calls coonfirm display
@@ -304,4 +304,3 @@ startContent.button.addEventListener("click",startQuiz);
 questionContent.answerList.addEventListener("click",processAnswer);
 
 startContent.displayContent();
-
