@@ -72,7 +72,7 @@ var endContent ={
 
 
         this.initialsButton.textContent = "Submit";
-        this.score.textContent = "Final Score: TODO";
+        this.score.textContent = "ERROR ERROR ERROR";
         this.header.textContent = "All Done!";
         this.initialsInstructions.textContent ="Enter Initials:";
 
@@ -86,8 +86,12 @@ var endContent ={
         
 
     },
+    updateContent: function(){
+        this.score.textContent ="Final Score: "+score;
+    },
 
     displayContent : function(){
+        this.updateContent();
         contentBox.appendChild(this.container);
     }   
 
