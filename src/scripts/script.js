@@ -10,7 +10,10 @@ var timer = document.getElementById("timer");
  */
 var score =0;
 
-var timerCount=60;
+var timerCount=75;
+
+//will be interval of timer
+var interval;
 
 /**
 * dynamic box content in grouped objects
@@ -25,10 +28,6 @@ var startContent = {
     instructions: window.document.createElement("p"),
 
     button: window.document.createElement("button"),
-
-    /**
-   * Initialize object content and place content on dom
-       */
 
     initializeContent: function () {
 
@@ -185,20 +184,47 @@ function clearDynamicBox(){
     
 }
 
-//TODO:: starts timer
+//starts quiz and timer
 function startQuiz() {
     console.log("Start The quiz");
+    startTimer();
     clearDynamicBox();
     questionContent.displayContent();
 }
+
+//Starts timer when timer reaches zero quiz is ended
+function startTimer(){
+
+    timer.textContent="Time: "+ timerCount;
+
+    interval = setInterval(()=>{
+        timerCount--;
+        timer.textContent="Time: "+ timerCount;
+
+        if(timerCount === 0){
+            endQuiz();
+            endTimer();    
+        }
+
+    },1000);
+}
+function endTimer(){
+    clearInterval(interval);
+    timer.textContent="";
+}
+
 function endQuiz(){
     console.log("The quiz has ended");
+
+    endTimer();
+    
+    score+=timerCount;
+
     clearDynamicBox();
     endContent.displayContent();
 }
 
 //Determines weather a question is correct or not and loads next question
-//TODO:: Remove time if wrong
 function processAnswer(event){
     if(event.target.id!=""){
         
@@ -209,12 +235,13 @@ function processAnswer(event){
             console.log("correct");
             score ++;
         }else{
+            timerCount-=10;
+            timer.textContent="Time: "+timerCount;
             console.log("wrong");
         }
         
         questionContent.loadNextQuestion();
     }
-    
 
 }
 
