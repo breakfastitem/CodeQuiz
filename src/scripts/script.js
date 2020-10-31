@@ -107,11 +107,11 @@ var questionContent = {
 
     answerListButtons : [ , , , ] ,
 
-    correctAnswerIndexes : [0],
+    correctAnswerIndexes : [0,1],
 
-    questions: ["What is the valid operator for declaring a variable in java script?"],
+    questions: ["What is the valid operator for declaring a variable in java script?"," At the top level in a script element, What is the name of object the key word (this) references?"],
 
-    answers: [["var","int","string","variable"]],
+    answers: [["var","int","string","variable"],["document","window","depends on the script name","main"]],
     
     questionIndex: 0,
 
@@ -142,6 +142,26 @@ var questionContent = {
 
     },
 
+    updateContent: function(){
+        this.questionText.textContent = this.questions[this.questionIndex];
+
+        for(var i=0;i<4;i++){
+            this.answerListButtons[i].textContent=(i+1)+": "+this.answers[this.questionIndex][i];
+        }
+
+    },
+
+    loadNextQuestion: function(){
+        if(this.questionIndex != this.questions.length-1){
+            this.questionIndex++;
+            this.updateContent();
+        }else{
+            endQuiz();
+        }
+
+    },
+
+
     //displays initialized content
     displayContent : function(){
         contentBox.appendChild(this.container);
@@ -158,17 +178,23 @@ var questionContent = {
 function startQuiz() {
     console.log("Start The quiz");
 }
+function endQuiz(){
+    console.log("The quiz has ended");
+}
 
 //Determines weather a question is correct or not and loads next question
 function processAnswer(event){
     selectedIndex = event.target.id.split("-")[1];
 
+    //TODO:: Add ui indication of result
     if(Number(selectedIndex)===questionContent.correctAnswerIndexes[questionContent.questionIndex]){
         console.log("correct");
         score ++;
     }else{
         console.log("wrong");
     }
+    
+    questionContent.loadNextQuestion();
 
 }
 
