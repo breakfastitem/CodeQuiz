@@ -174,27 +174,43 @@ var questionContent = {
  * global functions
  */
 
-//TODO:: starts timer and quiz event
+function clearDynamicBox(){
+    while(contentBox.firstChild!=null){
+        contentBox.removeChild(contentBox.firstChild);
+    }
+    
+}
+
+//TODO:: starts timer
 function startQuiz() {
     console.log("Start The quiz");
+    clearDynamicBox();
+    questionContent.displayContent();
 }
 function endQuiz(){
     console.log("The quiz has ended");
+    clearDynamicBox();
+    endContent.displayContent();
 }
 
 //Determines weather a question is correct or not and loads next question
+//TODO:: Remove time if wrong
 function processAnswer(event){
-    selectedIndex = event.target.id.split("-")[1];
+    if(event.target.id!=""){
+        
+        selectedIndex = event.target.id.split("-")[1];
 
-    //TODO:: Add ui indication of result
-    if(Number(selectedIndex)===questionContent.correctAnswerIndexes[questionContent.questionIndex]){
-        console.log("correct");
-        score ++;
-    }else{
-        console.log("wrong");
+        //TODO:: Add ui indication of result
+        if(Number(selectedIndex)===questionContent.correctAnswerIndexes[questionContent.questionIndex]){
+            console.log("correct");
+            score ++;
+        }else{
+            console.log("wrong");
+        }
+        
+        questionContent.loadNextQuestion();
     }
     
-    questionContent.loadNextQuestion();
 
 }
 
@@ -206,5 +222,5 @@ startContent.button.addEventListener("click",startQuiz);
 
 questionContent.answerList.addEventListener("click",processAnswer);
 
-questionContent.displayContent();
+startContent.displayContent();
 
