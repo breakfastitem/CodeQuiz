@@ -4,7 +4,11 @@
 
 var contentBox = document.getElementById("dynamic-content");
 
+var confirmBox = document.getElementById("dynamic-confirmation");
+
 var timer = document.getElementById("timer");
+
+
 /**
  * Global vars
  */
@@ -50,7 +54,6 @@ var startContent = {
 
 };
 
-
 var endContent ={
 
     container : window.document.createElement("div"),
@@ -95,7 +98,6 @@ var endContent ={
     }   
 
 };
-
 
 var questionContent = {
 
@@ -171,7 +173,50 @@ var questionContent = {
     }
 
 
-}
+};
+
+var confirmContent = {
+
+    container: window.document.createElement("div"),
+    line : window.document.createElement("hr"),
+    header: window.document.createElement("h3"),
+    //In milliseconds
+    timerLength:1000,
+
+    initializeContent : function () {
+        this.header.textContent ="ERROR ERROR ERROR";
+
+
+        this.container.appendChild(this.line);
+        this.container.appendChild(this.header);
+
+       
+
+    },
+
+    displayContentOnTimer : function (isCorrect) {
+
+        if(isCorrect){
+            this.header.textContent="Correct!";
+        }else{
+            this.header.textContent="Wrong!";
+        }
+
+        confirmBox.appendChild(this.container);
+
+        var timerTimeout = setTimeout(()=>{
+            this.clearConfirmBox();
+        },this.timerLength);
+        
+    },
+
+    clearConfirmBox : function (){
+        while(confirmBox.firstChild!=null){
+            confirmBox.removeChild(confirmBox.firstChild);
+        }
+    }
+
+};
 
 /**
  * global functions
@@ -186,6 +231,9 @@ function clearDynamicBox(){
 
 //starts quiz and timer
 function startQuiz() {
+    timerCount=75;
+    score=0;
+
     console.log("Start The quiz");
     startTimer();
     clearDynamicBox();
@@ -208,6 +256,7 @@ function startTimer(){
 
     },1000);
 }
+
 function endTimer(){
     clearInterval(interval);
     timer.textContent="";
@@ -217,27 +266,27 @@ function endQuiz(){
     console.log("The quiz has ended");
 
     endTimer();
-    
-    score+=timerCount;
+
+    score*=timerCount+1;
 
     clearDynamicBox();
     endContent.displayContent();
 }
 
-//Determines weather a question is correct or not and loads next question
+//Determines weather a question is correct or not and loads next question calls coonfirm display
 function processAnswer(event){
     if(event.target.id!=""){
         
         selectedIndex = event.target.id.split("-")[1];
 
-        //TODO:: Add ui indication of result
+        
         if(Number(selectedIndex)===questionContent.correctAnswerIndexes[questionContent.questionIndex]){
-            console.log("correct");
             score ++;
+            confirmContent.displayContentOnTimer(true);
         }else{
             timerCount-=10;
             timer.textContent="Time: "+timerCount;
-            console.log("wrong");
+            confirmContent.displayContentOnTimer(false);
         }
         
         questionContent.loadNextQuestion();
@@ -248,6 +297,7 @@ function processAnswer(event){
 endContent.initializeContent();
 startContent.initializeContent();
 questionContent.initializeContent();
+confirmContent.initializeContent();
 
 startContent.button.addEventListener("click",startQuiz);
 
