@@ -5,6 +5,12 @@
 var contentBox = document.getElementById("dynamic-content");
 
 var timer = document.getElementById("timer");
+/**
+ * Global vars
+ */
+var score =0;
+
+var timerCount=60;
 
 /**
 * dynamic box content in grouped objects
@@ -45,6 +51,7 @@ var startContent = {
 
 };
 
+
 var endContent ={
 
     container : window.document.createElement("div"),
@@ -82,11 +89,10 @@ var endContent ={
 
     displayContent : function(){
         contentBox.appendChild(this.container);
-    }
-    
-
+    }   
 
 };
+
 
 var questionContent = {
 
@@ -101,14 +107,19 @@ var questionContent = {
 
     answerListButtons : [ , , , ] ,
 
-    correctAnswerIndex : -1,
+    correctAnswerIndexes : [0],
 
+    questions: ["What is the valid operator for declaring a variable in java script?"],
+
+    answers: [["var","int","string","variable"]],
     
+    questionIndex: 0,
+
+
+    //initializes content according to questions index
     initializeContent : function () {
 
-        //TODO:: get from method and object
-        this.questionText.textContent = "what is up?";
-        correctAnswerIndex=2;
+        this.questionText.textContent = this.questions[this.questionIndex];
 
         //initialize button list
         for(var i= 0;i<4;i++){
@@ -116,7 +127,9 @@ var questionContent = {
             this.answerListItems[i]=window.document.createElement("li");
             this.answerListButtons[i]= window.document.createElement("button");
 
-            this.answerListButtons[i].textContent="Answer "+i;
+            this.answerListButtons[i].setAttribute("id","answer-"+i);
+
+            this.answerListButtons[i].textContent=(i+1)+": "+this.answers[this.questionIndex][i];
 
             this.answerList.appendChild(this.answerListItems[i]);
             this.answerListItems[i].appendChild(this.answerListButtons[i]);
@@ -129,6 +142,7 @@ var questionContent = {
 
     },
 
+    //displays initialized content
     displayContent : function(){
         contentBox.appendChild(this.container);
     }
@@ -137,12 +151,26 @@ var questionContent = {
 }
 
 /**
- * Starts Timer and question mode
+ * global functions
  */
+
+//TODO:: starts timer and quiz event
 function startQuiz() {
     console.log("Start The quiz");
 }
 
+//Determines weather a question is correct or not and loads next question
+function processAnswer(event){
+    selectedIndex = event.target.id.split("-")[1];
+
+    if(Number(selectedIndex)===questionContent.correctAnswerIndexes[questionContent.questionIndex]){
+        console.log("correct");
+        score ++;
+    }else{
+        console.log("wrong");
+    }
+
+}
 
 endContent.initializeContent();
 startContent.initializeContent();
@@ -150,9 +178,7 @@ questionContent.initializeContent();
 
 startContent.button.addEventListener("click",startQuiz);
 
+questionContent.answerList.addEventListener("click",processAnswer);
+
 questionContent.displayContent();
-
-
-
-
 
