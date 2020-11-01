@@ -17,8 +17,11 @@ var timerCount=75;
 //will be interval of timer
 var interval;
 
-var initialsData;
-var initialsData;
+//Object that holds local storage data
+var scoresData = {
+    scores: [],
+    initials: []
+};
 
 /**
 * dynamic box content in grouped objects
@@ -302,23 +305,23 @@ function setHighScore(event){
 
     event.preventDefault();
 
-    initialsData= JSON.parse(localStorage.getItem("initials"));
-    scoresData= JSON.parse(localStorage.getItem("scores"));
+    scoresDataTemp= JSON.parse(localStorage.getItem("scores"));
 
-    if(initialsData===null){
-        initialsData=[];
-        scoresData=[];
+    if(scoresDataTemp!=null){
+        scoresData=scoresDataTemp;
     } 
 
     var initials= endContent.initialsInput.value;
     
     if(initials!=null && initials.length<4){
-        initialsData.push(initials);
-        scoresData.push(score);
-        localStorage.setItem("initials",JSON.stringify(initialsData));
+        scoresData.initials.push(initials);
+        scoresData.scores.push(score);
+        
         localStorage.setItem("scores",JSON.stringify(scoresData));
+        
 
     }else{
+        //indicate in confirm ui
         console.log("Bad Input");
     }
 
