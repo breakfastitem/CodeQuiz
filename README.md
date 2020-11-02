@@ -22,6 +22,10 @@ The site appears in 3 states as follows.
 
 ![quiz-screenshot](./src/img/midQuizScreen.JPG)
 
+### End
+
+![end-screenShot](./src/img/scoreInputScreen.JPG)
+
 ### Scores
 
 ![score-screenshot](./src/img/highScoreScreen.JPG)
