@@ -1,6 +1,10 @@
 /*general Stylings*/
 body {
-    background-color: lightgray;
+    background-color: #eee;
+
+    font-family: 'Oxygen', sans-serif;
+    position: relative;
+
 }
 ol ,ul {
     list-style: none;
@@ -8,11 +12,32 @@ ol ,ul {
 li {
     margin-bottom: 5px;
 }
+input {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+h2{
+    font-size: 40px;
+}
 button {
-    background-color: rgba(137, 43, 226, 0.589);
+    border-color:green;
+    background-color: lightgreen;
+    border:3px,3px,3px,3px;
+
+    font-size: 20px;
+    
+}
+button:focus {
+   outline:none;
+}
+
+button:hover {
+    color:white;
+    background-color:  green;
 }
 /*container stylings*/
-.dynamic-box {
+ .dynamic-box {
 
     background-color: #eee;
     
@@ -22,6 +47,26 @@ button {
     margin-bottom: 90px;
     margin-left:10px;
 }
+.dynamic-box p {
+    font-size: 30px;
+    font-weight: 700;
+}
+.dynamic-box span {
+    font-size: 24px;
+}
+
+.start-content {
+    text-align: center;
+}
+.confirm-content {
+    color:green;
+}
 .box-content {
     margin-left: 20px;
+}
+#timer {
+    color:whitesmoke;
+    font-weight: 400;
+    position: absolute;
+    right:40px;
 }

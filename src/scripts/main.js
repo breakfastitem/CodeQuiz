@@ -41,8 +41,7 @@ var startContent = {
 
     initializeContent: function () {
 
-        //startButton.setAttribute("class","btn");
-
+        this.container.setAttribute("class","start-content");
 
         this.button.textContent = "Start";
         this.instructions.textContent = "Try to answer the following questions within the time limit.";
@@ -193,6 +192,7 @@ var confirmContent = {
     initializeContent : function () {
         this.header.textContent ="ERROR ERROR ERROR";
 
+        this.container.setAttribute("class","confirm-content");
 
         this.container.appendChild(this.line);
         this.container.appendChild(this.header);

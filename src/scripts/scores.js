@@ -25,7 +25,7 @@ var highScoreDisplay ={
             scoresData=scoresDataTemp;
             for(var i=0;i<scoresData.length;i++){
                 var scoreLI = window.document.createElement("li");
-                scoreLI.textContent= scoresData.initials[i]+": "+scoresData.scores[i];
+                scoreLI.textContent= (i+1) +".  " +scoresData.initials[i]+"-"+scoresData.scores[i];
 
                 this.list.appendChild(scoreLI);
                 
