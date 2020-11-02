@@ -188,6 +188,7 @@ var confirmContent = {
     header: window.document.createElement("h3"),
     //In milliseconds
     timerLength:1000,
+    timerTimeout:null,
 
     initializeContent : function () {
         this.header.textContent ="ERROR ERROR ERROR";
@@ -200,7 +201,8 @@ var confirmContent = {
 
     },
 
-    displayContentOnTimer : function (isCorrect) {
+    displayConfirmOnTimer : function (isCorrect) {
+        clearTimeout(this.timerTimeout);
 
         if(isCorrect){
             this.header.textContent="Correct!";
@@ -210,10 +212,24 @@ var confirmContent = {
 
         this.confirmBox.appendChild(this.container);
 
-        var timerTimeout = setTimeout(()=>{
+        this.timerTimeout = setTimeout(()=>{
             this.clearConfirmBox();
         },this.timerLength);
         
+    },
+
+    displayInvalidOnTimer : function () {
+
+        clearTimeout(this.timerTimeout);
+
+        this.header.textContent="Input must be less than 4 characters and not empty.";
+
+        this.confirmBox.appendChild(this.container);
+
+        this.timerTimeout = setTimeout(()=>{
+            this.clearConfirmBox();
+        },this.timerLength);
+
     },
 
     clearConfirmBox : function (){
@@ -289,11 +305,11 @@ function processAnswer(event){
         
         if(Number(selectedIndex)===questionContent.correctAnswerIndexes[questionContent.questionIndex]){
             score ++;
-            confirmContent.displayContentOnTimer(true);
+            confirmContent.displayConfirmOnTimer(true);
         }else{
             timerCount-=10;
             timer.textContent="Time: "+timerCount;
-            confirmContent.displayContentOnTimer(false);
+            confirmContent.displayConfirmOnTimer(false);
         }
         
         questionContent.loadNextQuestion();
@@ -315,7 +331,7 @@ function setHighScore(event){
 
     var initials= endContent.initialsInput.value;
     
-    if(initials!=null && initials.length<4){
+    if(initials!=null&& initials!="" && initials.length<4){
 
         addScoreToData(score,initials);
 
@@ -324,8 +340,8 @@ function setHighScore(event){
         window.location.href="./src/html/scores.html";
 
     }else{
-        //indicate in confirm ui
-        console.log("Bad Input");
+
+        confirmContent.displayInvalidOnTimer();
     }
 
     
@@ -337,7 +353,7 @@ function setHighScore(event){
 function addScoreToData(score,initials){
     var isFound=false;
     for(var i=0;i<scoresData.length&&!isFound;i++){
-        
+
         var prevScore = Number(scoresData.scores[i]);
         if(score > prevScore){
 
