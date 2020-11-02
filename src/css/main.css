@@ -1,6 +1,15 @@
 /*general Stylings*/
+body {
+    background-color: lightgray;
+}
 ol ,ul {
     list-style: none;
+}
+li {
+    margin-bottom: 5px;
+}
+button {
+    background-color: rgba(137, 43, 226, 0.589);
 }
 /*container stylings*/
 .dynamic-box {
@@ -15,10 +24,4 @@ ol ,ul {
 }
 .box-content {
     margin-left: 20px;
-}
-/*score html styles*/
-/*makes navbar size consitent accross both scenes*/
-#score-bar {
-    padding-top: 28px;
-    padding-bottom: 28px;
 }

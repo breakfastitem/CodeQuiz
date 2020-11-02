@@ -1,6 +1,13 @@
 /*score html styles*/
 /*makes navbar size consitent accross both scenes*/
-#score-bar {
+.navbar {
     padding-top: 28px;
     padding-bottom: 28px;
+}
+li { 
+
+   background-color: rgba(0, 161, 8, 0.637);
+    
+   margin-right: 300px;
+   padding-left: 10px; 
 }
