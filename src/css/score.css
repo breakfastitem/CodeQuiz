@@ -1,0 +1,6 @@
+/*score html styles*/
+/*makes navbar size consitent accross both scenes*/
+#score-bar {
+    padding-top: 28px;
+    padding-bottom: 28px;
+}
