@@ -18,6 +18,7 @@ var timerCount=75;
 var interval;
 
 //Object that holds local storage data
+
 var scoresData = {
     length:0,
     scores: [],
@@ -243,7 +244,7 @@ function startQuiz() {
     startTimer();
     clearDynamicBox();
     questionContent.displayContent();
-}
+};
 
 function endQuiz(){
     console.log("The quiz has ended");
@@ -254,7 +255,7 @@ function endQuiz(){
 
     clearDynamicBox();
     endContent.displayContent();
-}
+};
 
 
 //Starts timer when timer reaches zero quiz is ended
@@ -272,12 +273,12 @@ function startTimer(){
         }
 
     },1000);
-}
+};
 
 function endTimer(){
     clearInterval(interval);
     timer.textContent="";
-}
+};
 
 //Determines weather a question is correct or not and loads next question calls coonfirm display
 function processAnswer(event){
@@ -298,7 +299,7 @@ function processAnswer(event){
         questionContent.loadNextQuestion();
     }
 
-}
+};
 
 //Handles submition of initials
 //saves to local storage navigates to high score page
@@ -315,21 +316,58 @@ function setHighScore(event){
     var initials= endContent.initialsInput.value;
     
     if(initials!=null && initials.length<4){
-        scoresData.initials.push(initials);
-        scoresData.scores.push(score);
-        scoresData.length++;
 
-        localStorage.setItem("scores",JSON.stringify(scoresData));
-        
+        addScoreToData(score,initials);
+
+        localStorage.setItem("scores",JSON.stringify(scoresData)); 
+
+        window.location.href="./src/html/scores.html";
 
     }else{
         //indicate in confirm ui
         console.log("Bad Input");
     }
 
-    window.location.href="./src/html/scores.html";
+    
 
-}
+};
+
+//add new score into proper spot in array
+//Highest scores should have lower indexes
+function addScoreToData(score,initials){
+    var isFound=false;
+    for(var i=0;i<scoresData.length&&!isFound;i++){
+        
+        var prevScore = Number(scoresData.scores[i]);
+        if(score > prevScore){
+
+            var tempScoresArray = scoresData.scores.splice(i,scoresData.length-i);
+            scoresData.scores.push(score);
+           
+           
+
+            var tempInitialsArray =scoresData.initials.splice(i,scoresData.length-i);
+            scoresData.initials.push(initials);
+            
+
+            for(var j=0;j<tempScoresArray.length;j++){
+
+                scoresData.scores.push(tempScoresArray[j]);
+                scoresData.initials.push(tempInitialsArray[j]);
+
+            }
+
+            isFound=true;
+        }
+    }
+
+    if(!isFound){
+        scoresData.scores.push(score);
+        scoresData.initials.push(initials);
+    }
+
+    scoresData.length++;
+};
 
 endContent.initializeContent();
 startContent.initializeContent();

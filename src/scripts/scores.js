@@ -32,6 +32,7 @@ var highScoreDisplay ={
             }
         }
     },
+
     clearList(){
         while(this.list.firstChild!=null){
            this.list.removeChild(this.list.firstChild);
@@ -42,7 +43,6 @@ var highScoreDisplay ={
         this.initializeList();
         this.container.appendChild(this.list);
     }
-
 
 };
 
