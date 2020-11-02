@@ -13,6 +13,7 @@ var highScoreDisplay ={
     list: window.document.createElement("ol"),
 
     initializeList: function() {
+        this.clearList();
         var scoresDataTemp = JSON.parse(localStorage.getItem("scores"));
 
         if(scoresDataTemp===null){
@@ -20,7 +21,7 @@ var highScoreDisplay ={
             localStorage.setItem("scores",JSON.stringify(scoresData));
 
         }else{
-            
+
             scoresData=scoresDataTemp;
             for(var i=0;i<scoresData.length;i++){
                 var scoreLI = window.document.createElement("li");
@@ -31,8 +32,14 @@ var highScoreDisplay ={
             }
         }
     },
+    clearList(){
+        while(this.list.firstChild!=null){
+           this.list.removeChild(this.list.firstChild);
+        }
+    },
 
     displayList(){
+        this.initializeList();
         this.container.appendChild(this.list);
     }
 
@@ -50,8 +57,9 @@ clearButton.addEventListener("click", ()=>{
     scoresData.length=0;
 
     localStorage.setItem("scores" , JSON.stringify(scoresData));
+
+    highScoreDisplay.displayList();
     
 });
 
-highScoreDisplay.initializeList();
 highScoreDisplay.displayList();
