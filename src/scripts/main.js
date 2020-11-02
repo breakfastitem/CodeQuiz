@@ -19,6 +19,7 @@ var interval;
 
 //Object that holds local storage data
 var scoresData = {
+    length:0,
     scores: [],
     initials: []
 };
@@ -316,7 +317,8 @@ function setHighScore(event){
     if(initials!=null && initials.length<4){
         scoresData.initials.push(initials);
         scoresData.scores.push(score);
-        
+        scoresData.length++;
+
         localStorage.setItem("scores",JSON.stringify(scoresData));
         
 
