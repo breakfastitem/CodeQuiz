@@ -44,7 +44,7 @@ var startContent = {
         this.container.setAttribute("class","start-content");
 
         this.button.textContent = "Start";
-        this.instructions.textContent = "Try to answer the following questions within the time limit.";
+        this.instructions.textContent = "Try to answer the following questions within 75 seconds. Every incorrect question subtracts 10 seconds from timer.";
         this.header.textContent = "Coding Quiz Challenge";
 
         this.container.appendChild(this.header);
@@ -283,7 +283,7 @@ function startTimer(){
         timerCount--;
         timer.textContent="Time: "+ timerCount;
 
-        if(timerCount === 0){
+        if(timerCount <= 0){
             endQuiz();
             endTimer();    
         }
